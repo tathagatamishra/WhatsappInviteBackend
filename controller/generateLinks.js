@@ -1,8 +1,4 @@
-const express = require("express");
-const router = express.Router();
-
-// message: the template text; imageUrl optional; recipients: array of digits (no plus)
-router.post("/", (req, res) => {
+exports.genRoutes = async (req, res) => {
   const { recipients, message, imageUrl } = req.body;
   if (!Array.isArray(recipients) || recipients.length === 0)
     return res.status(400).json({ error: "no recipients" });
@@ -22,6 +18,4 @@ router.post("/", (req, res) => {
   });
 
   res.json({ links });
-});
-
-module.exports = router;
+};

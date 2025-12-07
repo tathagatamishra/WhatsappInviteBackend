@@ -1,28 +1,48 @@
 require("dotenv").config();
 const express = require("express");
-const connectDB = require("./db/connection");
 const cors = require("cors");
-const path = require("path");
+const connectDB = require("./db/connection");
+const route = require("./router/route");
 
-const uploadRoutes = require("./routes/upload");
-const genRoutes = require("./routes/generateLinks");
+// require("./db/connection")
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
+const allowedOrigins = [
+  "http://localhost:3000", // local dev
+  "https://whatsapp-invite.vercel.app/", // production frontend
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow server-to-server / curl
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "x-email",
+      "x-email-token",
+    ],
+  })
+);
+
+// Handle preflight requests globally
 app.options("*", cors());
 
-// Serve uploaded images statically (dev)
-app.use(
-  "/uploads",
-  express.static(path.join(__dirname, "..", "public", "uploads"))
-);
-app.use("/api/upload-image", uploadRoutes);
-app.use("/api/generate-links", genRoutes);
+app.use(express.json());
+app.use(route);
 connectDB();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 1234;
+
 app.listen(PORT, () => {
   console.log(`Server Run on ${PORT} ...`);
 });
