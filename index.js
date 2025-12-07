@@ -11,6 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.options("*", cors());
+
 // Serve uploaded images statically (dev)
 app.use(
   "/uploads",
