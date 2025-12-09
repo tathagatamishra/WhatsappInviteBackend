@@ -8,7 +8,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://whatsapp-invite.vercel.app/",
+  "https://whatsapp-invite.vercel.app",
 ];
 
 app.use(
