@@ -1,0 +1,17 @@
+{
+  "name": "whatsappinvitebackend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.51.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "mongoose": "^8.20.2"
+  }
+}
